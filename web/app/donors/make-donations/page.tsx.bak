@@ -1,0 +1,267 @@
+"use client";
+
+import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import { useEffect, useState } from "react";
+import {
+  WagmiProvider,
+  useAccount,
+  useReadContracts,
+  useWriteContract,
+} from "wagmi";
+import { writeContract } from "@wagmi/core";
+import abi from "../../abis/contractabit.json";
+import token from "../../abis/tokenabi.json";
+
+import axios from "axios";
+import { log } from "console";
+import { toast } from "react-toastify";
+
+const FormLayout = () => {
+  const { isConnected, address } = useAccount();
+  const { writeContractAsync } = useWriteContract();
+  console.log("🚀 ~ FormLayout ~ isConnected:", isConnected);
+  const [formData, setFormData] = useState({
+    // Initialize form data state
+
+    date: "",
+    type: "select",
+    amount: "",
+    meal_time: "",
+    visiting_time: "",
+  });
+
+  const [donationAmount, setDonationAmount] = useState(0);
+
+  const handleSubmit = () => {
+    axios
+      .post("http://localhost:3000/donation", formData)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    // Handle form submission logic here
+	
+    if (formData.type === "monetaryDonation" && formData.amount === "") {
+      // If monetary donation and amount is not provided, show error message
+      toast.error("Please enter a donation amount for monetary donations.", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+      return;
+    }
+	
+    console.log("Form submitted:", formData);
+    toast("Donation Successful!");
+  };
+
+  const [allowance, setAllowance] = useState(0);
+
+  const wagmigotchiContract = {
+    address: "0xecb504d39723b0be0e3a9aa33d646642d1051ee1",
+    abi: token,
+  } as const;
+
+  const result = useReadContracts({
+    contracts: [
+      {
+        address: "0x86dfA48971b165D39b6910174cD4D0104Df0AC36",
+        abi: token,
+        functionName: "allowance",
+        args: [address, "0x4076d780739328b44Ba3C2BBDB66DC2d23388675"],
+      },
+    ],
+  });
+
+  useEffect(() => {
+    setAllowance(Number(result.data?.[0].result));
+  }, [result]);
+
+  async function handleApprove() {
+    const result = await writeContractAsync({
+      abi,
+      address: "0x86dfA48971b165D39b6910174cD4D0104Df0AC36",
+      functionName: "approve",
+      args: [
+        "0x4076d780739328b44Ba3C2BBDB66DC2d23388675",
+        "100000000000000000000000000000000000",
+      ],
+    });
+    console.log(result);
+  }
+
+  async function handleDonation() {
+    if (formData.type === "monetaryDonation") {
+      const result = await writeContractAsync({
+        abi,
+        address: "0x4076d780739328b44Ba3C2BBDB66DC2d23388675",
+        functionName: "Donate",
+        args: ["1", (Number(formData.amount) * 10 ** 18).toString()],
+      });
+      console.log(result);
+    }
+    handleSubmit();
+  }
+
+  return (
+    <>
+      <Breadcrumb pageName="Make Donations" />
+      <div className="content-wrapper">
+        <form className="max-w-xl mx-auto mt-8">
+          <div>
+            <h3 className="mb-2 text-lg font-semibold">Make A Donation</h3>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                1. Donation Date :
+              </label>
+              <input
+                type="date"
+                className="w-full p-2 mt-1 ml-1 border rounded-md"
+                onChange={(e) => {
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    date: e.target.value,
+                  }));
+                }}
+                required
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                2. Donation Type :
+              </label>
+              <select
+                className="w-full p-2 mt-1 ml-1 border rounded-md"
+                onChange={(e) => {
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    type: e.target.value,
+                  }));
+                }}
+                required
+              >
+                <option value="select">select </option>
+                <option value="materialDonation">Material Donations </option>
+                <option value="monetaryDonation">Monetary donations</option>
+                <option value="mealDonation">The Meal donations</option>
+              </select>
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                3. Donation Amount :
+              </label>
+              <input
+                type="number"
+                className="w-full p-2 mt-1 ml-1 border rounded-md"
+                placeholder="Mterials or Amount"
+                onChange={(e) => {
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    amount: e.target.value,
+                  }));
+                }}
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                4. If you are planning to make a meal donation, please select a
+                time :
+              </label>
+              <select
+                className="w-full p-2 mt-1 ml-1 border rounded-md"
+                onChange={(e) => {
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    meal_time: e.target.value,
+                  }));
+                }}
+              >
+                <option value="select">select</option>
+                <option value="breakfast">Breakfast</option>
+                <option value="lunch">Lunch</option>
+                <option value="teatime">Teatime</option>
+                <option value="dinner">Dinner</option>
+              </select>
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                5. For the material donation, please mention the time that you
+                are planning to visit the orphanage :
+              </label>
+              <input
+                type="text"
+                className="w-full p-2 mt-1 ml-1 border rounded-md"
+                placeholder="Mention Time"
+                required
+                onChange={(e) => {
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    visiting_time: e.target.value,
+                  }));
+                }}
+              />
+            </div>
+
+            {/* <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                6. For the monetary donation, please click here to proceed :
+              </label>
+              <span className="ml-1">
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-500 rounded text-red"
+                >
+                  Integration with the blockchain
+                </button>
+              </span>
+            </div> */}
+          </div>
+          {formData.type === "monetaryDonation" ? (
+            <div className="mt-8">
+              <label className="block mb-5 text-sm font-medium text-gray-700">
+                For the monetary donation, please click here to proceed :
+              </label>
+              {isConnected ? (
+                allowance === 0 ? (
+                  <button
+                    type="button"
+                    className="px-4 py-2 text-white rounded bg-primary "
+                    onClick={handleApprove}
+                  >
+                    Approve
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="px-4 py-2 text-white rounded bg-primary "
+                    onClick={handleDonation}
+                  >
+                    Submit
+                  </button>
+                )
+              ) : (
+                <w3m-button />
+              )}
+            </div>
+          ) : (
+            <button
+              type="button"
+              className="px-4 py-2 text-white rounded bg-primary "
+              onClick={handleDonation}
+            >
+              Submit
+            </button>
+          )}
+        </form>
+      </div>
+    </>
+  );
+};
+
+export default FormLayout;
