@@ -1,0 +1,48 @@
+@import url('https://fonts.cdnfonts.com/css/satoshi');
+@import "react-big-calendar/lib/css/react-big-calendar.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+    body {
+        @apply font-satoshi font-normal text-base text-body bg-whiten relative z-1;
+    }
+}
+
+@layer utilities {
+    /* Chrome, Safari, and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+    .chat-height {
+        @apply h-[calc(100vh - 8.125rem)] lg: h-[calc(100vh - 5.625rem)];
+    }
+    .inbox-height {
+        @apply h-[calc(100vh - 8.125rem)] lg: h-[calc(100vh - 5.625rem)];
+    }
+}
+
+
+/* third-party libraries CSS */
+
+.tableCheckbox:checked~div span {
+    @apply opacity-100;
+}
+
+.tableCheckbox:checked~div {
+    @apply bg-primary border-primary;
+}
+
+
+/* ... (other styles) ... */
+
+.map-btn .jvectormap-container .jvectormap-zoomin,
+.map-btn .jvectormap-container .jvectormap-zoomin {
+    right: 45px;
+}
