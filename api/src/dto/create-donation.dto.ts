@@ -25,4 +25,14 @@ export class CreateDonationDto {
   @IsNotEmpty()
   @ApiProperty()
   readonly visiting_time: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  readonly donor_name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  readonly donor_contact: string;
 }

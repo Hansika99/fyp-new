@@ -12,5 +12,8 @@ export class Withdraw {
 
   @Prop()
   reason: string;
+
+  @Prop({ type: Date })
+  withdrawalDate: Date;
 }
 export const WithdrawSchema = SchemaFactory.createForClass(Withdraw);

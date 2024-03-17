@@ -17,9 +17,6 @@ import { log } from "console";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
-
-
 const FormLayout = () => {
   const { isConnected, address } = useAccount();
   const { writeContractAsync } = useWriteContract();
@@ -33,15 +30,37 @@ const FormLayout = () => {
     amount: "",
     meal_time: "",
     visiting_time: "",
+    donor_name: "",
+    donor_contact: "",
   });
 
   const [donationAmount, setDonationAmount] = useState(0);
 
   const handleSubmit = () => {
+    console.log("Form data:", formData);
 
-    if (!formData.date || !formData.type) {
-      toast.error("Please fill in the required fields: Donation Date and Donation Type.");
-      return; // Do not proceed if required fields are not filled
+    // if (!formData.date || !formData.type) {
+    //   toast.error(
+    //     "Please fill in the required fields: Donation Date and Donation Type."
+    //   );
+    //   return; // Do not proceed if required fields are not filled
+    // }
+
+    if (!formData.date) {
+      toast.error("Donation date is required. ");
+      return; // Do not proceed if any required fields are not filled
+    }
+    if (!formData.type) {
+      toast.error("Donation type is required. ");
+      return; // Do not proceed if any required fields are not filled
+    }
+    if (!formData.donor_name.trim()) {
+      toast.error("Donor name is required. ");
+      return; // Do not proceed if any required fields are not filled
+    }
+    if (!formData.donor_contact.trim()) {
+      toast.error("Donor contact is required. ");
+      return; // Do not proceed if any required fields are not filled
     }
 
     axios
@@ -50,21 +69,32 @@ const FormLayout = () => {
         console.log(response);
         toast("Donation Successful!");
 
-        // Clear the form data to its initial state
-        setFormData({
-          date: "",
-          type: "select",
-          amount: "",
-          meal_time: "",
-          visiting_time: "",
-        });
+     
 
         console.log("Form submitted:", formData);
-
       })
       .catch(function (error) {
         console.log(error);
       });
+
+      
+      // Clear the form data to its initial state
+      setFormData({
+        date: "",
+        type: "select",
+        amount: "",
+        meal_time: "",
+        visiting_time: "",
+        donor_name: "",
+        donor_contact: "",
+      });
+
+      console.log("Form submitted:", formData);
+
+      // Reload the page after submission
+    window.location.reload();
+
+      
   };
 
   const [allowance, setAllowance] = useState(0);
@@ -98,7 +128,6 @@ const FormLayout = () => {
   }, [result]);
 
   async function handleApprove() {
-
     if (validateAndShowError()) {
       return; // Validation failed, do not proceed
     }
@@ -116,7 +145,6 @@ const FormLayout = () => {
   }
 
   async function handleDonation() {
-
     if (validateAndShowError()) {
       return; // Validation failed, do not proceed
     }
@@ -132,13 +160,15 @@ const FormLayout = () => {
     }
 
     // Clear the form data to its initial state
-    setFormData({
-      date: "",
-      type: "select",
-      amount: "",
-      meal_time: "",
-      visiting_time: "",
-    });
+    // setFormData({
+    //   date: "",
+    //   type: "select",
+    //   amount: "",
+    //   meal_time: "",
+    //   visiting_time: "",
+    //   donor_name: "",
+    //   donor_contact: "",
+    // });
 
     handleSubmit();
   }
@@ -237,11 +267,46 @@ const FormLayout = () => {
                 type="text"
                 className="w-full p-2 mt-1 ml-1 border rounded-md"
                 placeholder="Mention Time"
-                required
                 onChange={(e) => {
                   setFormData((prevData) => ({
                     ...prevData,
                     visiting_time: e.target.value,
+                  }));
+                }}
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                5. Donor Name :
+              </label>
+              <input
+                type="text"
+                className="w-full p-2 mt-1 ml-1 border rounded-md"
+                placeholder="Your Name"
+                required
+                onChange={(e) => {
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    donor_name: e.target.value,
+                  }));
+                }}
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                5. Donor Contact No:
+              </label>
+              <input
+                type="text"
+                className="w-full p-2 mt-1 ml-1 border rounded-md"
+                placeholder="Your Contact Number"
+                required
+                onChange={(e) => {
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    donor_contact: e.target.value,
                   }));
                 }}
               />
