@@ -16,6 +16,7 @@ export type donation = {
   visiting_time: string;
   donor_name: string;
   donor_contact: string;
+  orphanage: string;
 };
 
 export type withdrawal = {
@@ -23,3 +24,8 @@ export type withdrawal = {
   reason: string;
   withdrawalDate: Date;
 };
+
+export type orphanage = {
+  _id: string;
+  name: string;
+}

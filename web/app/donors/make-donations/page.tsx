@@ -16,6 +16,7 @@ import axios from "axios";
 import { log } from "console";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Package, orphanage } from "../../types/package";
 
 const FormLayout = () => {
   const { isConnected, address } = useAccount();
@@ -32,9 +33,37 @@ const FormLayout = () => {
     visiting_time: "",
     donor_name: "",
     donor_contact: "",
+    orphanage: "", // New state for orphanage dropdown
   });
 
   const [donationAmount, setDonationAmount] = useState(0);
+
+  const [orphanageList, setOrphanageList] = useState<orphanage[]>([]); // State to hold orphanage list
+
+  useEffect(() => {
+    // Fetch orphanage list from API
+    axios
+      .get("http://localhost:3000/orphanage")
+      .then((response) => {
+        setOrphanageList(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching orphanage list:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/orphanage")
+      .then((response) => {
+        const orphanages = response.data.orphanageData; // Extract orphanageData array from response
+        setOrphanageList(orphanages); // Set orphanageList state with the extracted orphanages
+        console.error("orphanage list", orphanages);
+      })
+      .catch((error) => {
+        console.error("Error fetching orphanage list:", error);
+      });
+  }, []);
 
   const handleSubmit = () => {
     console.log("Form data:", formData);
@@ -69,32 +98,28 @@ const FormLayout = () => {
         console.log(response);
         toast("Donation Successful!");
 
-     
-
         console.log("Form submitted:", formData);
       })
       .catch(function (error) {
         console.log(error);
       });
 
-      
-      // Clear the form data to its initial state
-      setFormData({
-        date: "",
-        type: "select",
-        amount: "",
-        meal_time: "",
-        visiting_time: "",
-        donor_name: "",
-        donor_contact: "",
-      });
+    // Clear the form data to its initial state
+    setFormData({
+      date: "",
+      type: "select",
+      amount: "",
+      meal_time: "",
+      visiting_time: "",
+      donor_name: "",
+      donor_contact: "",
+      orphanage: "", // New state for orphanage dropdown
+    });
 
-      console.log("Form submitted:", formData);
+    console.log("Form submitted:", formData);
 
-      // Reload the page after submission
+    // Reload the page after submission
     window.location.reload();
-
-      
   };
 
   const [allowance, setAllowance] = useState(0);
@@ -310,6 +335,31 @@ const FormLayout = () => {
                   }));
                 }}
               />
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                6. Orphanage:
+              </label>
+              <select
+                className="w-full p-2 mt-1 ml-1 border rounded-md"
+                value={formData.orphanage}
+                onChange={(e) => {
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    orphanage: e.target.value,
+                  }));
+                  console.log("Orphanage ",formData.orphanage)
+                }}
+                required
+              >
+                {Array.isArray(orphanageList) &&
+                  orphanageList.map((orphanageItem) => (
+                    <option key={orphanageItem._id} value={orphanageItem.name}>
+                      {orphanageItem.name}
+                    </option>
+                  ))}
+              </select>
             </div>
 
             {/* <div className="mb-4">

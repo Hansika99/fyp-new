@@ -35,4 +35,9 @@ export class CreateDonationDto {
   @IsNotEmpty()
   @ApiProperty()
   readonly donor_contact: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  readonly orphanage: string;
 }
