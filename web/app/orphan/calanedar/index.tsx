@@ -33,7 +33,7 @@ const CalendarEvents = (props) => {
     // Map donation details to events
     const eventsFromDonation = donationDetails.map((donationItem) => ({
       id: donationItem.amount,
-      title: `${donationItem.type} - $${donationItem.amount} meals`,
+      title: `${donationItem.type} ${donationItem.meal_time}`,
       start: new Date(donationItem.date), // Replace with your actual date property
       end: new Date(donationItem.date), // Replace with your actual date property
     }));

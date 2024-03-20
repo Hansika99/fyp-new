@@ -10,8 +10,6 @@ const localizer = momentLocalizer(moment);
 interface Event {
   id: number;
   title: string;
-  start: Date;
-  end: Date;
 }
 
 const CalendarEvents = (props) => {
@@ -33,9 +31,9 @@ const CalendarEvents = (props) => {
     // Map donation details to events
     const eventsFromDonation = donationDetails.map((donationItem) => ({
       id: donationItem.amount,
-      title: `${donationItem.type} - $${donationItem.amount} meals`,
-      start: new Date(donationItem.date), // Replace with your actual date property
-      end: new Date(donationItem.date), // Replace with your actual date property
+      title: `${donationItem.type} ${donationItem.meal_time}`
+      //start: new Date(donationItem.date), // Replace with your actual date property
+      //end: new Date(donationItem.date), // Replace with your actual date property
     }));
 
     // Update myEventsList with the events from donation details

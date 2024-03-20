@@ -26,6 +26,12 @@ const FormElements = () => {
   };
   const [formData, setFormData] = useState(InitialDate);
 
+  type FormData = {
+    [key: string]: {
+      [key: string]: any;
+    };
+  };
+
   const handleChange = (section: string, field: string, value: string) => {
     setFormData((prevData) => ({
       ...prevData,
