@@ -20,7 +20,10 @@ import { WithdrawService } from './withdraw/withdraw.service';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(process.env.DATABASE_URL, {
+    // MongooseModule.forRoot(process.env.DATABASE_URL, {
+    //   dbName: 'orphandb',
+    // }),
+    MongooseModule.forRoot("mongodb://localhost:27017", {
       dbName: 'orphandb',
     }),
     MongooseModule.forFeature([

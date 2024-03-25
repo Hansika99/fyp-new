@@ -26,6 +26,12 @@ const FormElements = () => {
   };
   const [formData, setFormData] = useState(InitialDate);
 
+  type FormData = {
+    [key: string]: {
+      [key: string]: any;
+    };
+  };
+
   const handleChange = (section: string, field: string, value: string) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -52,6 +58,9 @@ const FormElements = () => {
 
     // Handle form submission logic here
     console.log("Form submitted:", formData);
+
+    // Reload the page after submission
+    window.location.reload();
   };
   return (
     <>

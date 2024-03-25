@@ -12,6 +12,8 @@ export class WithdrawService {
   async createWithdraw(
     createWithdrawDto: CreateWithdrawDto,
   ): Promise<IWithdraw> {
+    // Set the current date to the withdrawDate field
+    createWithdrawDto.withdrawalDate = new Date();
     const newWithdraw = await new this.withdrawModel(createWithdrawDto);
     return newWithdraw.save();
   }

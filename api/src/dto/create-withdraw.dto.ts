@@ -11,5 +11,8 @@ export class CreateWithdrawDto {
   @ApiProperty()
   readonly reason: string;
 
-  
+  @IsDate()
+  @IsNotEmpty()
+  @ApiProperty()
+  withdrawalDate: Date;
 }

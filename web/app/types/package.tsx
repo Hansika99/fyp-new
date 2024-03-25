@@ -5,6 +5,7 @@ export type Package = {
   orphanageName: string;
   amount: number;
   status: string;
+  
 };
 
 export type donation = {
@@ -13,4 +14,18 @@ export type donation = {
   meal_time: string;
   type: string;
   visiting_time: string;
+  donor_name: string;
+  donor_contact: string;
+  orphanage: string;
 };
+
+export type withdrawal = {
+  amount: number;
+  reason: string;
+  withdrawalDate: Date;
+};
+
+export type orphanage = {
+  _id: string;
+  name: string;
+}

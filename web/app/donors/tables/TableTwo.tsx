@@ -58,7 +58,13 @@ const TableTwo = () => {
                 Amount
               </th>
               <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
-                Status
+                Donor Name
+              </th>
+              <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
+                Donor Contact
+              </th>
+              <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
+                Orphanage
               </th>
               <th className="px-4 py-4 font-medium text-black dark:text-white">
                 Actions
@@ -91,12 +97,22 @@ const TableTwo = () => {
                   </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <p
-                    className={`inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium text-success bg-succes`}
-                  >
-                    Paid
+                  <p className="text-black dark:text-white">
+                    {donationItem.donor_name}
                   </p>
                 </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {donationItem.donor_contact}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {donationItem.orphanage}
+                  </p>
+                </td>
+
+
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <div className="flex items-center space-x-3.5">
                     <button className="hover:text-primary">

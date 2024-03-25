@@ -1,12 +1,12 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { Metadata } from "next";
-import TableTwo from "../tables/TableTwo";
+import TableThree from "../tables/TableThree";
 
 const FormLayout = () => {
   return (
     <>
       <Breadcrumb pageName="Donation Allocation" />
-      <TableTwo />
+      <TableThree />
     </>
   );
 };

@@ -39,6 +39,9 @@ const FormLayout = () => {
     // Handle form submission logic here
     console.log("Form submitted:", formData);
     toast("Withdraw Successful!");
+
+    // Reload the page after submission
+    window.location.reload();
   };
 
   const [donationAmount, setDonationAmount] = useState(0);

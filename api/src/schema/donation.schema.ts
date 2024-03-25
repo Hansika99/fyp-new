@@ -16,5 +16,14 @@ export class Donation {
 
   @Prop()
   visiting_time: string;
+
+  @Prop()
+  donor_name: string;
+
+  @Prop()
+  donor_contact: string;
+
+  @Prop()
+  orphanage: string;
 }
 export const DonationSchema = SchemaFactory.createForClass(Donation);

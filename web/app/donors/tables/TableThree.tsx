@@ -46,7 +46,7 @@ const TableThree = () => {
           <thead>
             <tr className="text-left bg-gray-2 dark:bg-meta-4">
               <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                Withdrawal Amount
+                Withdrawal Amount $
               </th>
               <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
                 Reason
