@@ -323,29 +323,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 Orphanage Registration
                               </Link>
                             </li>
-
-                            <li>
-                              <Link
-                                href="/orphan/donation-details"
-                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                  pathname === "/forms/form-layout" &&
-                                  "text-white"
-                                }`}
-                              >
-                                Donation Details
-                              </Link>
-                            </li>
-                            <li>
-                              <Link
-                                href="/orphan/donation-schedule"
-                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                  pathname === "/forms/form-layout" &&
-                                  "text-white"
-                                }`}
-                              >
-                                Donation Shedule
-                              </Link>
-                            </li>
                           </ul>
                         </div>
                       </React.Fragment>
@@ -444,28 +421,39 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           </li>
 
                           <li>
-                              <Link
-                                href="/orphan/donation-schedule"
-                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                  pathname === "/forms/form-layout" &&
-                                  "text-white"
-                                }`}
-                              >
-                                Donation Shedule
-                              </Link>
-                            </li>
+                            <Link
+                              href="/orphan/donation-schedule"
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                pathname === "/forms/form-layout" &&
+                                "text-white"
+                              }`}
+                            >
+                              Donation Shedule
+                            </Link>
+                          </li>
 
-                            <li>
-                              <Link
-                                href="/orphan/donation-details"
-                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                  pathname === "/forms/form-layout" &&
-                                  "text-white"
-                                }`}
-                              >
-                                Donation Details
-                              </Link>
-                            </li>
+                          <li>
+                            <Link
+                              href="/orphan/donation-details"
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                pathname === "/forms/form-layout" &&
+                                "text-white"
+                              }`}
+                            >
+                              Donation Details
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              href="/donors/donation-allocation"
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                pathname === "/forms/form-layout" &&
+                                "text-white"
+                              }`}
+                            >
+                              View Donation Allocation
+                            </Link>
+                          </li>
                         </ul>
                       </div>
                     </React.Fragment>

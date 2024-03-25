@@ -58,6 +58,9 @@ const FormElements = () => {
 
     // Handle form submission logic here
     console.log("Form submitted:", formData);
+
+    // Reload the page after submission
+    window.location.reload();
   };
   return (
     <>

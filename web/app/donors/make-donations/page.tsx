@@ -67,14 +67,7 @@ const FormLayout = () => {
 
   const handleSubmit = () => {
     console.log("Form data:", formData);
-
-    // if (!formData.date || !formData.type) {
-    //   toast.error(
-    //     "Please fill in the required fields: Donation Date and Donation Type."
-    //   );
-    //   return; // Do not proceed if required fields are not filled
-    // }
-
+    
     if (!formData.date) {
       toast.error("Donation date is required. ");
       return; // Do not proceed if any required fields are not filled

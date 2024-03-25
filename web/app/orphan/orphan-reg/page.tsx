@@ -73,6 +73,9 @@ const FormElements = () => {
 
     // Handle form submission logic here
     console.log("Form submitted:", formData);
+
+    // Reload the page after submission
+    window.location.reload();
   };
 
   return (
@@ -134,7 +137,7 @@ const FormElements = () => {
               </label>
               <select
                 className="w-full p-2 mt-1 ml-1 border rounded-md"
-                value={formData.personalInformation.gender || 'select'}
+                value={formData.personalInformation.gender || "select"}
                 onChange={(e) => {
                   setFormData((prevData) => ({
                     ...prevData,
