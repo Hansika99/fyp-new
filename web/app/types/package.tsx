@@ -23,9 +23,16 @@ export type withdrawal = {
   amount: number;
   reason: string;
   withdrawalDate: Date;
+  to_wallet: string;
 };
 
 export type orphanage = {
   _id: string;
   name: string;
+  address: string;
+  contact_number: number;
+  owners_name: string;
+  owners_contact_number: number;
+  orphan_count: number;
+  staff_count: number;
 }

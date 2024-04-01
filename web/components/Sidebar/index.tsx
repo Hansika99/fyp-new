@@ -454,6 +454,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               View Donation Allocation
                             </Link>
                           </li>
+
+                          <li>
+                            <Link
+                              href="/orphan/orphange-contact"
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                pathname === "/forms/form-layout" &&
+                                "text-white"
+                              }`}
+                            >
+                              Orphanages Contact Info
+                            </Link>
+                          </li>
                         </ul>
                       </div>
                     </React.Fragment>

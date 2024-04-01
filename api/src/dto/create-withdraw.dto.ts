@@ -15,4 +15,9 @@ export class CreateWithdrawDto {
   @IsNotEmpty()
   @ApiProperty()
   withdrawalDate: Date;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  readonly to_wallet: string;
 }

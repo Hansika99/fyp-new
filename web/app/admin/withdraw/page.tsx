@@ -24,6 +24,7 @@ const FormLayout = () => {
 
     amount: "",
     reason: "",
+    to_wallet: ""
   });
 
   const handleSubmit = () => {
@@ -69,7 +70,7 @@ const FormLayout = () => {
 
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">
-                1. Amount
+                1. Amount ($)
               </label>
               <input
                 type="number"
@@ -95,6 +96,23 @@ const FormLayout = () => {
                   setFormData((prevData) => ({
                     ...prevData,
                     reason: e.target.value,
+                  }));
+                }}
+                required
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                2. To Wallet Address :
+              </label>
+              <input
+                type="text"
+                className="w-full p-2 mt-1 ml-1 border rounded-md"
+                onChange={(e) => {
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    to_wallet: e.target.value,
                   }));
                 }}
                 required
