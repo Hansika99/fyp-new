@@ -1,21 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Package, withdrawal } from "../../types/package";
+import { Package, orphanage } from "../../types/package";
 import axios from "axios";
 
 const TableThree = () => {
-  const [withdrawalDetails, setWithdrawalDetails] = useState<withdrawal[]>([]);
+  const [orphanageDetails, setOrphanageDetails] = useState<orphanage[]>([]);
   const [loading, setLoading] = useState(true);
   const [noData, setNoData] = useState(false);
   useEffect(() => {
     // Fetch data from the API
-    axios.get("http://localhost:3000/withdraw").then((response) => {
-      const responseData: withdrawal[] = response.data
-        ?.withdrawData as withdrawal[];
-      setWithdrawalDetails(responseData);
+    axios.get("http://localhost:3000/orphanage").then((response) => {
+      const responseData: orphanage[] = response.data
+        ?.orphanageData as orphanage[];
+      setOrphanageDetails(responseData);
 
-      console.log(response.data.withdrawData);
+      console.log(response.data.orphanageData);
 
 
       setLoading(false);
@@ -37,7 +37,7 @@ const TableThree = () => {
     return <p>Loading...</p>; // You can replace this with a loading indicator
   }
 
-  console.log('withdrawal log',withdrawalDetails);
+  console.log('orphanage log',orphanageDetails);
 
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -46,45 +46,72 @@ const TableThree = () => {
           <thead>
             <tr className="text-left bg-gray-2 dark:bg-meta-4">
               <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                Withdrawal Amount ($)
+                Orphanage Name
               </th>
               <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                Reason
+                Orphanage Address
               </th>
-              <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                Date
-              </th>      
               <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                To Wallet
-              </th>                               
+                Orphanage Contact
+              </th>   
+              <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                Owner Name
+              </th>        
+              <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                Owner Contact
+              </th>  
+              <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                Orphan count
+              </th> 
+              <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                Staff count
+              </th>                         
             </tr>
           </thead>
           <tbody>
-            {withdrawalDetails.map((withdrawalItem, key) => (
+            {orphanageDetails.map((orphanageItem, key) => (
               <tr key={key}>
                 
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                   <h5 className="font-medium text-black dark:text-white">
-                    {withdrawalItem.amount}
+                    {orphanageItem.name}
                   </h5>
                   {/* <p className="text-sm">${packageItem.price}</p> */}
                 </td>
 
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                    {withdrawalItem.reason}
+                    {orphanageItem.address}
                   </p>
                 </td>
 
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                    {new Date(withdrawalItem.withdrawalDate).toLocaleDateString()}
+                    {orphanageItem.contact_number}
                   </p>
                 </td>
 
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                    {withdrawalItem.to_wallet}
+                    {orphanageItem.owners_name}
+                  </p>
+                </td>
+
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {orphanageItem.owners_contact_number}
+                  </p>
+                </td>
+
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {orphanageItem.orphan_count}
+                  </p>
+                </td>
+
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {orphanageItem.staff_count}
                   </p>
                 </td>
                 

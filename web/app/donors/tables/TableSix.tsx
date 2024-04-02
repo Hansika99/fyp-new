@@ -1,22 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Package, withdrawal } from "../../types/package";
+import { Package, orphan } from "../../types/package";
 import axios from "axios";
 
-const TableThree = () => {
-  const [withdrawalDetails, setWithdrawalDetails] = useState<withdrawal[]>([]);
+const TableSix = () => {
+  const [orphanDetails, setOrphanDetails] = useState<orphan[]>([]);
   const [loading, setLoading] = useState(true);
   const [noData, setNoData] = useState(false);
   useEffect(() => {
     // Fetch data from the API
-    axios.get("http://localhost:3000/withdraw").then((response) => {
-      const responseData: withdrawal[] = response.data
-        ?.withdrawData as withdrawal[];
-      setWithdrawalDetails(responseData);
+    axios.get("http://localhost:3000/orphan").then((response) => {
+      const responseData: orphan[] = response.data?.orphanData as orphan[];
+      setOrphanDetails(responseData);
 
-      console.log(response.data.withdrawData);
-
+      console.log(response.data.orphanData);
 
       setLoading(false);
       if (responseData.length <= 0) {
@@ -37,7 +35,7 @@ const TableThree = () => {
     return <p>Loading...</p>; // You can replace this with a loading indicator
   }
 
-  console.log('withdrawal log',withdrawalDetails);
+  console.log("orphan log", orphanDetails);
 
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -46,48 +44,67 @@ const TableThree = () => {
           <thead>
             <tr className="text-left bg-gray-2 dark:bg-meta-4">
               <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                Withdrawal Amount ($)
+                Orphan Name
               </th>
               <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                Reason
+                Gender
               </th>
-              <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                Date
-              </th>      
               <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                To Wallet
-              </th>                               
+                DOB
+              </th>
+              <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                Date Found
+              </th>
+              <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                How Found
+              </th>
+              <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                Orphanage
+              </th>
             </tr>
           </thead>
           <tbody>
-            {withdrawalDetails.map((withdrawalItem, key) => (
+            {orphanDetails.map((orphanageItem, key) => (
               <tr key={key}>
-                
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                   <h5 className="font-medium text-black dark:text-white">
-                    {withdrawalItem.amount}
+                    {orphanageItem.personalInformation.name}
                   </h5>
                   {/* <p className="text-sm">${packageItem.price}</p> */}
                 </td>
 
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                    {withdrawalItem.reason}
+                    {orphanageItem.personalInformation.gender}
                   </p>
                 </td>
 
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                    {new Date(withdrawalItem.withdrawalDate).toLocaleDateString()}
+                    {new Date(
+                      orphanageItem.personalInformation.dateOfBirth
+                    ).toLocaleDateString()}
                   </p>
                 </td>
 
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                    {withdrawalItem.to_wallet}
+                    {new Date(orphanageItem.dateFound).toLocaleDateString()}
                   </p>
                 </td>
-                
+
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {orphanageItem.howFound}
+                  </p>
+                </td>
+
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {orphanageItem.orphanage}
+                  </p>
+                </td>
+
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <div className="flex items-center space-x-3.5">
                     <button className="hover:text-primary">
@@ -166,4 +183,4 @@ const TableThree = () => {
   );
 };
 
-export default TableThree;
+export default TableSix;

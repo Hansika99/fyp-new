@@ -9,9 +9,11 @@ import SwitcherFour from "@/components/Switchers/SwitcherFour";
 import SwitcherOne from "@/components/Switchers/SwitcherOne";
 import SwitcherThree from "@/components/Switchers/SwitcherThree";
 import SwitcherTwo from "@/components/Switchers/SwitcherTwo";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { Package, orphanage } from "../../types/package";
 
-import { useState } from "react";
+
 import axios from "axios";
 
 const FormElements = () => {
@@ -34,6 +36,7 @@ const FormElements = () => {
     },
     howFound: "Select",
     dateFound: "",
+    orphanage: "", // New state for orphanage dropdown
     healthInformation: {
       allergies: "",
       medications: "",
@@ -46,6 +49,33 @@ const FormElements = () => {
     },
   };
   const [formData, setFormData] = useState(initialFormData);
+
+  const [orphanageList, setOrphanageList] = useState<orphanage[]>([]); // State to hold orphanage list
+
+  useEffect(() => {
+    // Fetch orphanage list from API
+    axios
+      .get("http://localhost:3000/orphanage")
+      .then((response) => {
+        setOrphanageList(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching orphanage list:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/orphanage")
+      .then((response) => {
+        const orphanages = response.data.orphanageData; // Extract orphanageData array from response
+        setOrphanageList(orphanages); // Set orphanageList state with the extracted orphanages
+        console.error("orphanage list", orphanages);
+      })
+      .catch((error) => {
+        console.error("Error fetching orphanage list:", error);
+      });
+  }, []);
 
   const handleChange = (section: string, field: string, value: string) => {
     setFormData((prevData) => ({
@@ -545,6 +575,31 @@ const FormElements = () => {
               />
             </div>
           </div>
+
+          <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                6. Orphanage:
+              </label>
+              <select
+                className="w-full p-2 mt-1 ml-1 border rounded-md"
+                value={formData.orphanage}
+                onChange={(e) => {
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    orphanage: e.target.value,
+                  }));
+                  console.log("Orphanage ",formData.orphanage)
+                }}
+                required
+              >
+                {Array.isArray(orphanageList) &&
+                  orphanageList.map((orphanageItem) => (
+                    <option key={orphanageItem._id} value={orphanageItem.name}>
+                      {orphanageItem.name}
+                    </option>
+                  ))}
+              </select>
+            </div>
 
           <div className="mt-8">
             <button
