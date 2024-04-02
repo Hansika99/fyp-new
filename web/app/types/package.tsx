@@ -5,7 +5,6 @@ export type Package = {
   orphanageName: string;
   amount: number;
   status: string;
-  
 };
 
 export type donation = {
@@ -35,4 +34,15 @@ export type orphanage = {
   owners_contact_number: number;
   orphan_count: number;
   staff_count: number;
-}
+};
+
+export type orphan = {
+  dateFound: Date;
+  howFound: string;
+  orphanage: string;
+  personalInformation: {
+    name: string;
+    gender: string;
+    dateOfBirth: Date;
+  };
+};

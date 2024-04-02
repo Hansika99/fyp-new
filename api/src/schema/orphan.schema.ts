@@ -12,6 +12,8 @@ export class Orphan {
   dateFound: Date;
   @Prop()
   howFound: string;
+  @Prop()
+  orphanage: string;
   @Prop({ type: PersonalInformation })
   personalInformation: PersonalInformation;
   @Prop({ type: GuardianInformation })

@@ -121,6 +121,11 @@ export class CreateOrphanDto {
   @ApiProperty()
   readonly howFound: string;
 
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  readonly orphanage: string;
+
   @IsObject()
   @ValidateNested()
   @Type(() => PersonalInformation)
